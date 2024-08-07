@@ -1,0 +1,21 @@
+bb-roracle version 2.21a
+Improved Extent check processing (should do the same with table checks)
+Added some default stuff
+Standardized some stuff
+Improved logon error checking
+Notified on Extent overides
+
+bb-roracle version 2.20
+In case of upgrade from prior version version...add a column "listener-name" in bb-roracle.ids
+
+bb-roracle version 2.19
+change BBHOME in ext/bb-roracle.sh
+Add your data bases to the etc/bb-roracle.ids file
+change the etc/bb-roracle.def file to match your site
+        specifically: ORATAB, ORACLE_USER, ORACLE_HOME, TNS_ADMIN, ORA_PROCS
+change the etc/bb-roracle.dbtab to meet your site notification levels
+change your tnsnames.ora if required
+change the owner/group to your bb user/group on all files
+
+Remember to change your svcerrlist and trapcodes variables in bbwarnsetup.cfg on your BBPAGER host.
+Be sure to read info in bb-roracle.def

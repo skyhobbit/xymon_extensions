@@ -1,0 +1,96 @@
+# bb-roracle.dbtab Version:2.21
+# Data base notify level table
+# File format:
+# <ORACLE_SID>:<TABLESPACE_NAME>:<YELLOW>:<RED>
+# <ORACLE_SID>:DATABASE_DEFAULT:<Tablespace Yellow>:<Tablespace Red>:<EXT Yellow>:<Ext Red>:<PIN Yellow>:<PIN Red>:<Area Yellow>:<Area Red>:<Block Yellow>:<Block Red>:<K of Mem free Yellow>:<K of Mem free Red>:<Rolbak Yellow>:<Rolbak Red>:<Show Green Tables>:<Process Yellow>:<Process Red>:<Sessions Yellow>:<Sessions Red>:<Statistics Yellow>:<Statistics Red>:<RAC Minimum User Sessions Per Server Before Test>:<RAC Sessions Yellow>:<RAC Sessions Red>:<Mimimum EXT value>
+# 01 - <ORACLE_SID>             # Oracle SID
+# 02 - DATABASE_DEFAULT         # use these values as this SIDS default values
+# 03 - <Tablespace Yellow>      # Number at which to set this tests color to yellow
+# 04 - <Tablespace Red>         # Number at which to set this tests color to red
+# 05 - <Ext Yellow>             # Percent of extents in use at which to set Extent test color to yellow
+# 06 - <Ext Red>                # Percent of extents in use at which to set Extent test color to red
+# 07 - <PIN Yellow>             # Number at which to set this tests color to yellow
+# 08 - <PIN Red>                # Number at which to set this tests color to red
+# 09 - <Area Yellow>            # Number which SQLAREA test must full below to trigger a yellow
+# 10 - <Area Red>               # Number which SQLAREA test must fall below to trigger a red
+# 11 - <Block Yellow>           # Number at which to set this tests color to yellow
+# 12 - <Block Red>              # Number at which to set this tests color to red
+# 13 - <K of Mem free Yellow>   # Number at or below which to set this tests color to yellow
+# 14 - <K of Mem free Red>      # Number at or below which to set this tests color to red
+# 15 - <Rolbak Yellow>          # Number at which to set this tests color to yellow
+# 16 - <Rolbak Red>             # Number at which to set this tests color to red
+# 17 - <Show Green Tables>      # Show Green tables in Tablespace check output (override tables always display)
+# 18 - <Process Yellow>         # Number at which to set this tests color to yellow
+# 19 - <Process Red>            # Number at which to set this tests color to red
+# 20 - <Sessions Yellow>        # Number at which to set this tests color to yellow
+# 21 - <Sessions Red>           # Number at which to set this tests color to red
+# 22 - <Statistics Yellow>      # Number at which to set this tests color to yellow
+# 23 - <Statistics Red>         # Number at which to set this tests color to red
+# 24 - <RAC Minimum User Sessions Per Server Before Test>
+# 25 - <RAC Sessions Yellow>    # Number at which to set this tests color to yellow
+# 26 - <RAC Sessions Red>       # Number at which to set this tests color to red
+# 27 - <Mimimum EXT value>      # Minimum percent of extents in use before testing with Extent check (should be below Ext Yellow)
+#
+# You can use a "@" (atsuch) as a wildcard for the ORACLE_SID.
+#   default levels for a tablespace are used if there is not an explicit entry
+#   for the ORACLE_SID:TBLSPACE:....
+#
+# You can use the DATABASE_DEFAULT keyword to modify the default levels
+# use 101 to ignore (override) a level
+
+# RAC Sessions do not test unless <Minimum User Sessions Pr. Cluster Member> has been reached
+#   <Minimum User Sessions Pr. Cluster Member>!<Minimum User Fair Share>
+#
+# ACTUAL DEFAULTS
+#                    3  4  5  6  7  8  9  10 11 12 13 14 15 16 1718 19 20 21 2223 24 25 2627
+# @:DATABASE_DEFAULT:94:97:60:75:85:75:85:75:85:75:30:15:75:85:Y:99:99:99:99:8:15:40:10:5:50
+#
+# set a global database default
+#                  3  4  5  6  7  8  9  10 11 12 13 14 15 16 1718 19 20 21 2223 24 25 2627
+@:DATABASE_DEFAULT:94:97:80:95:85:75:85:75:85:75:30:15:80:90:N:85:95:85:95:8:15:33:10:5:60
+
+# set database specific notify values (override global database default)
+HR1_PROD:DATABASE_DEFAULT:::::::60:50:::::::Y::::
+HR1_MODL:DATABASE_DEFAULT:::::::60:50
+HR1_DEVL:DATABASE_DEFAULT:::::::60:50:::::::Y
+qatd:DATABASE_DEFAULT:::::::::::20:15
+tmiqp:DATABASE_DEFAULT:::::::80
+
+# set some global table space warning levels (for all sids)
+@:SYSTEM:90:95
+@:connect_data:90:95
+
+# set some specific table space warning levels (101 to ignore)
+HR1_PROD:CSS_DATA:97:99
+HR1_PROD:CSS_TEMP:101:101
+HR1_PROD:SYSTEM:79:83
+HR1_PROD:FCSA_DATA_INDEX:98:99
+
+HR1_MODL:CSS_DATA:97:99
+HR1_MODL:CSS_TEMP:101:101
+HR1_MODL:SYSTEM:79:83
+HR1_MODL:CSS_PAY_INDEX:97:99
+
+HR1_DEVL:CSS_DATA:97:99
+HR1_DEVL:CSS_TEMP:101:101
+HR1_DEVL:SYSTEM:79:83
+
+# set some specific extent space warning levels (101 to ignore)
+HR1_PROD:RBSEG02:101:101
+HR1_PROD:RBSEG03:101:101
+HR1_PROD:RBSEG04:101:101
+HR1_PROD:RBSEG05:101:101
+
+# ignore all invalid object checks in this oracle-sid
+#I:<ORACLE_SID>:@
+# ignore all invalid object checks for <Type> in this oracle-sid
+#I:<ORACLE_SID>:<Type>
+# ignore this invalid object in this oracle-sid
+#I:<ORACLE_SID>:<Type>:<Object>
+
+# Set to ignore all invalid objects of type VIEW
+#I:HR1_DEVL:VIEW
+# Set to ignore all invalid objects for this SID
+I:HR1_DEVL:@
+I:HR1_PROD:@
+I:HR1_MODL:@

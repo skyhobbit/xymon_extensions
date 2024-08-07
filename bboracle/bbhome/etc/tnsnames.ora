@@ -1,0 +1,70 @@
+HR1_PROD =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 168.168.8.140)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = PROD)
+    )
+  )
+
+HR1_MODL =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 168.168.8.140)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = MODL)
+    )
+  )
+
+HR1_DEVL =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 168.168.8.140)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = DEVL)
+    )
+  )
+
+TMIQP =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = st-db7)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVICE_NAME = tmiqp)
+    )
+  )                                                                                                          
+
+QATD =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = st-db7)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVICE_NAME = qatd.st_db7)
+    )
+  )
+
+CSFP =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = st-db7)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVICE_NAME = csfp)
+    )
+  )
+
+PRD1 =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = st-db7)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVICE_NAME = prd1.st_db7)
+    )
+  )
+

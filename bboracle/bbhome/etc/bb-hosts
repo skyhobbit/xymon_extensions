@@ -1,0 +1,12 @@
+#
+# THE BIG BROTHER HOSTS FILE Version:0.03
+#
+# 
+# Example oracle config for 2 servers with 4 databases
+
+page Oracle Oracle-Status
+group-only orasys|oradb
+168.168.8.140	st-hr1.test.com # noconn
+168.168.8.140	st-hr1-DEVL.test.com # noconn
+168.168.8.140	st-hr1-MODL.test.com # noconn
+168.168.8.248	st-db7.test.com # noconn

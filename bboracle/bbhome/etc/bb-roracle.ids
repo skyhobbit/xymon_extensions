@@ -1,0 +1,71 @@
+# Title:   $BBHOME/etc/bb-roracle.ids
+# Author:  keith sebesta
+# Date:    16th June 2003
+# Version 2.5
+
+################################################################
+# REQUIREMENTS: The Oracle user should be a user with
+# only connect and select any table privleges. All other privleges should be
+# revoked for security measures. For reasons that should be obvious, don't put
+# the username/password of a dba user in here- it'll work, but it's a
+# bit like running BB itself as root.
+# Even worse, don't use "system" or "sys" user, either.
+# Remember to grant the correct rights!
+# Oracle 9.. you can test with something like this
+# GRANT CREATE SESSION,SELECT_CATALOG_ROLE TO mon;
+################################################################
+# Configurations Section. Please Check!!!
+################################################################
+#
+# type: (local or remote)
+# local hosts are the oracle sids running on this machine
+# remote are sids defined in tnsnames file. you may have to define TNS_ADMIN
+
+# SID:
+# Look in example tnsnames.ora file
+
+# userid:
+# password:
+# Specify a user with select any table privs.
+# It is recommended you create a new user for this purpose.
+# db_checker/secret
+
+# tests: ( on error and uppercase letter set status to RED otherwise yellow)
+# a = Process check ( LOCAL type only)
+# b = Database check (required otherwise other tests, except (a) are disabled)
+# c = User proc check ( LOCAL type only )
+# d = Users on check
+# e = Tablespace check
+# f = Extent check
+# g = Shadow check ( LOCAL type only )
+# h = Name space reload check
+# i = SQL Area hit ratio check
+# j = Block buffer hit ratio check
+# k = Shared memory check
+# l = Rollback segment check
+# m = Invalid Object check
+# n = Deadlock check
+# o = Processes check
+# p = Sessions check
+# q = Statistics check
+# r = RAC check
+# - = Skip all tests (still sends output to BB)
+
+# log-as-host: ( machine name to use when sending to bb-display host - needs row in bb-hosts file)
+# 		if using FQDN you'll need host,my,domain or IP address
+# allows you to have notifications based on SIDs
+# BLANK log-as-host field has notifications sent from the local host
+# This alllows you to send notifications to different people for each SID
+# listener-name: listener name as you entered it in listener.ora.  Put "LISTENER" if you don't know (Defaults to LISTENER)
+#
+#
+# (-) = place holder ( use this to fill otherwise empty fields)
+
+#type	SID			userid		password	tests				log-as-host		listener
+LOCAL	qatd		-			-			a					this-host		LISTENER
+LOCAL	prd1		-			-			a
+LOCAL	tmiqp		mon			big			aBc					a-different-host
+LOCAL	csfp		-			-			a
+REMOTE	HR1_PROD	mon			big			BEFhijklmN			st-hr1,test,com
+REMOTE	HR1_MODL	mon			big			BEFhijkl			st-hr1-MODL,test,com
+REMOTE	HR1_DEVL	mon			big			BcdeFghijklmnopqr	st-hr1-DEVL,test,com
