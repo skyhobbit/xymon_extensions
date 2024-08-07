@@ -1,0 +1,95 @@
+# Title:   $BBHOME/etc/bb-roracle.def
+# Author:  initially from James Huff (c) 2001 bb-moracle.sh but basterdized by keith sebesta
+# Email:   jhuff@puget.com
+# Date:    12th April 2003
+# Purpose: Check the status of all ORACLE databases listed and report back to
+#          the "Big Brother" display master.
+#               dd/mm/yy
+# History: 1.1  24/04/01  J.Huff        * Initial version - sorta
+#          1.4  06/03/02  R.Herron      * Link this version no to bb-moracle.sh and
+#                                         made changes to support using ORATAB for
+#                                         ORACLE_HOME determination
+#	2.0	05/12/03  K.Sebesta	* Chopped to pieces to work with local and remote DBs
+#	2.01	05/13/03  K.Sebesta	* Chopped more
+#	2.02	05/16/03  K.Sebesta	* completed chopping                           
+#	2.03	05/21/03  K.Sebesta     * applied Christopher White (c) 2002-2003 code
+#	2.04d	05/28/03  K.Sebesta     * added missed ext_check color values
+#	2.05b	05/29/03  K.Sebesta     * updates for multithread
+#       2.13    08/22/03  K.Sebesta     * removed duplicate path junk
+#
+# Disclaimer: This code carries no warranties expressed or implied.  If
+#             you run it and it doesn't work as expected (up to and
+#             including trashing your computer) then I will accept no
+#             responsibility whatsoever.
+# 
+################################################################
+# REQUIREMENTS: The ORACLE_USER is the LOCAL server oracle id
+# SEE bb-roracle.ids for database user information
+################################################################
+#
+# Configurations Section. Please Check!!! 
+#
+################################################################
+# update this file with your databases to check
+################################################################
+export UPFILE=$BBHOME/etc/bb-roracle.ids
+export DBTAB=$BBHOME/etc/bb-roracle.dbtab
+
+################################################################
+# Oracle-DB adjustments
+# Setup the environment
+################################################################
+ORATAB="/home/bb/bb/etc/oratab"; export ORATAB
+ORACLE_TERM=vt100; export ORACLE_TERM
+ORA_CSM_MODE=line; export ORA_CSM_MODE
+ORACLE_USER="oracle"; export ORACLE_USER # for ps command
+
+#default oracle home (v1.4-RLH modification)
+DFT_ORACLE_HOME="/u01/oracle/product/10.2.0/db_1"; export DFT_ORACLE_HOME
+ORACLE_HOME=$DFT_ORACLE_HOME; export ORACLE_HOME
+################################################################
+# You may need to set this up for remote data base definitions
+################################################################
+#export TNS_ADMIN=$ORACLE_HOME/network/admin # set the location of tnsnames.ora file
+export TNS_ADMIN=$BBHOME/etc # set the location of tnsnames.ora file
+
+################################################################
+# add path to PATH ; set name for SQLPLUS
+################################################################
+if [[ `echo $PATH | $EGREP -c "(^|:)$ORACLE_HOME/bin($|:)"` -eq 0 ]]; then
+        PATH=$ORACLE_HOME/bin:${PATH}
+fi
+export SQLPLUS=$ORACLE_HOME/bin/sqlplus
+
+################################################################
+# Choose which procs to monitor on local host
+# ORA_PROCS="pmon smon arch lgwr dbw0 ckpt reco d000 s000"
+# ORA_PROCS="pmon dbw0 lgwr ckpt smon reco snp0 snp1 snp2 snp3 s000 d000"
+# ORA_PROCS="pmon smon lgwr dbw0 ckpt reco"
+# ORA_PROCS="arc0 ckpt dbw0 lgwr pmon reco smon"; export ORA_PROCS
+################################################################
+ORA_PROCS="ckpt dbw0 lgwr pmon reco smon lmon lms0 lms1"; export ORA_PROCS
+
+################################################################
+# Misc parameters that don't fit anywhere else
+# SPACER can be any amount. I choose 3 spaces
+# to help reading icons on left hand. Otherwise
+# the offending colored icon is hard to quickly find.
+################################################################
+#Variable initialization
+################################################################
+LINE=""; export LINE
+SPACER="   ";export SPACER
+export LOCAL_SIDS # leave this blank picked up from file
+
+################################################################
+# What is to be tested? (Y/N) on local host
+################################################################
+LISTENER_CHECK="Y"; export LISTENER_CHECK
+LISTENER_CHECK_VERBOSE="Y"; export LISTENER_CHECK_VERBOSE
+SIDS_CHECK="Y"; export SIDS_CHECK
+
+################################################################
+# should we check the databases (process the $UPFILE parameters)
+################################################################
+DATABASE_CHECK="Y"; export DATABASE_CHECK
